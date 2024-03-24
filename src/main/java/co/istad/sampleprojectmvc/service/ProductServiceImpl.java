@@ -4,7 +4,11 @@ import co.istad.sampleprojectmvc.dto.ProductResponse;
 import co.istad.sampleprojectmvc.model.Product;
 import co.istad.sampleprojectmvc.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -55,6 +59,14 @@ public class ProductServiceImpl implements ProductService{
                 .price(product.getPrice())
                 .imageUrl(product.getImageUrl())
                 .build();
+    }
+
+    public ProductResponse findProductByID(int id) {
+        Product product = productRepository.getAllProducts().stream()
+                .filter(product1 -> product1.getId()==id).findFirst()
+                .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Product doesn't exist"));
+        return mapProductToResponse(product);
+
     }
 
     @Override

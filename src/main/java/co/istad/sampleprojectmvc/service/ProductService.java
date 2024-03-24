@@ -10,5 +10,8 @@ public interface ProductService {
     ProductResponse createProduct(ProductRequest productRequest);
     void deletedProduct(int productId);
     void updateProduct(ProductRequest productRequest);
+
+    Object findProductByID(int id);
+
 }
 

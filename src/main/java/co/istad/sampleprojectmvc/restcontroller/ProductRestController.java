@@ -32,7 +32,15 @@ public class ProductRestController {
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Map<String,Object>  findProductByID(@PathVariable int id){
-        return null;
+        return response(productService.findProductByID(id), "success", HttpStatus.FOUND.value()git);
+    }
+
+    private Map<String, Object> response(Object object , String message, int status) {
+        HashMap<String, Object> response = new HashMap<String, Object>();
+        response.put("payload",object);
+        response.put("status",status);
+        response.put("message",message);
+        return  response;
     }
 
 }
